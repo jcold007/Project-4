@@ -42,10 +42,3 @@ int main(){
 	gameBoard.printNeighbors();
 	gameBoard.score();
 }
-
-
-void BFS(){
-
-}
-
-

@@ -111,7 +111,7 @@ void board::printNeighbors(){
 	// 	<< theNeighbors[4] << " " << theNeighbors[5] << " "
 	// 	<< theNeighbors[6] << " " << theNeighbors[7] << " "
 	// 	<< theNeighbors[8] << endl;
-	
+
 	// board neighbor(theBoard);
 	// neighbor.getNeighbors();
 	// for (int i = 0; i < 3; i++){
@@ -149,6 +149,28 @@ bool board::operator== (board &compareMe){
 	}
 }
 
-
-
+void board::BFS(board parentBoard)
+{
+	board aBoard(parentBoard);
+	int moves = 0;
+	heap<board> boardSolve;
+    parentBoard.getNeighbors();
+    for (int i = 0; i < neighbors.size(); ++i){
+    	boardSolve.insert(neighbors[i]);
+    }
+    while(currentScore != 0){
+    	if(moves < 1000){
+    		board best = boardSolve.deleteMin(); //(boardSolve.deleteMin().currentState);
+    		// best = boardSolve.deleteMin();
+    		best.getNeighbors();
+    		previousBoards.push_back(best);
+    		for (int i = 0; i < neighbors.size(); ++i){
+    			if(notSeen(neighbors[i]) == true){
+    				boardSolve.insert(neighbors[i]);
+    			}
+    		}
+    		moves = moves + 1;
+    	}
+    }
+}
 
