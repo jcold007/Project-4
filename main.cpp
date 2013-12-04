@@ -3,7 +3,8 @@
 */
 
  /*
-main.cpp Class:
+main.cpp Class: Used to handle the game. This is where an initial board is set, 
+				then corrected and played
 	... 
  */
 
@@ -14,6 +15,10 @@ main.cpp Class:
 #include "board.h"
 using namespace std;
 
+/*
+Function used to run the program. Initial board is set then other functions are
+called to order the game board. 
+*/
 int main(){
 	cout << "test" << endl;
 	vector<int> initBoard;
@@ -41,4 +46,5 @@ int main(){
 
 	gameBoard.printNeighbors();
 	gameBoard.score();
+	gameBoard.BFS();
 }

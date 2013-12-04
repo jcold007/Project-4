@@ -3,7 +3,8 @@
 */
 
  /*
-board.cpp Class:
+board.cpp Class: Class used to serve to build and construct the game board. This
+				is also where the the best move is determined and used.
 	... 
  */
 
@@ -65,6 +66,9 @@ void board::printBoard(){
 	}
 }
 
+/*
+Function serves to fetch the other board possibilities given an initial board.
+*/
 vector<board> board::getNeighbors(){
 	cout << "test" << endl;
 	vector<int> theNeighbors = theBoard;
@@ -108,6 +112,9 @@ vector<board> board::getNeighbors(){
 	return neighbors;
 }
 
+/*
+Function that prints the neighbors
+*/
 void board::printNeighbors(){
 	// cout << neighbors[0] << " " << neighbors[1] << " " 
 	// 	<< neighbors[2] << " " << neighbors[3] << " "
@@ -125,6 +132,9 @@ void board::printNeighbors(){
 	// }
 }
 
+/*
+Function that gives a given board a score.
+*/
 int board::score(){
 	int boardScore = 0;
 	for(int i = 0; i < theBoard.size(); i++){
@@ -136,6 +146,9 @@ int board::score(){
 	return boardScore;
 }
 
+/*
+Less-than operator
+*/
 bool board::operator< (board &compareMe){
 	if (compareMe.score() < score()){
 		return true;
@@ -144,6 +157,9 @@ bool board::operator< (board &compareMe){
 	}
 }
 
+/*
+Greater-than operator
+*/
 bool board::operator== (board &compareMe){
 	if (compareMe.theBoard == theBoard){
 		return true;
@@ -152,6 +168,11 @@ bool board::operator== (board &compareMe){
 	}
 }
 
+/*
+Function that serves to check if the board has already been seen. In other words,
+this helps scan to not move backwards. If the board has been seen in the vector,
+it would get skip to the next board. 
+*/
 bool board::notSeen(board one, board two){
 	vector<int> board1 = one.theBoard;
 	vector<int> board2 = two.theBoard;
@@ -163,6 +184,11 @@ bool board::notSeen(board one, board two){
 	return true;
 }
 
+/*
+Best first search. This function is (supposed) to find the best move to take.
+This function utilizes the heap class in order to organize the boards in the
+tree and to easily choose the next best move
+*/
 void board::BFS(board parentBoard)
 {
 	//board aBoard(parentBoard);
@@ -179,7 +205,7 @@ void board::BFS(board parentBoard)
     		best.getNeighbors();
     		previousBoards.push_back(best);
     		for (int i = 0; i < neighbors.size(); ++i){
-    			if(notSeen(neighbors[i]) == true){
+    			if(notSeen(neighbors[i]) == false){
     				heapSearch.insert(neighbors[i]);
     			}
     		}
