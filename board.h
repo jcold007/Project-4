@@ -29,5 +29,6 @@ public:
 	int score();
 	bool operator< (board &compareMe);
 	bool operator== (board &compareMe);
+	bool notSeen(board a, board b);
 };
 #endif

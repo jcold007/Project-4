@@ -14,15 +14,17 @@ board.cpp Class:
 #include "heap.h"
 using namespace std;
 
-vector<int> initial;
-vector<int> current;
+//vector<int> initial;
+//vector<int> current; -> theBoard
 vector<board> neighbors;
+vector<board> previousBoards;
+int currentScore;
 
 /*
 A constructor that is given a vector of integers. The zero location
 is tracked, since this represents the empty space
 */
-board::board(vector<int> startBoard){//, int zeroLocation){
+board::board(vector<int> startBoard){ //, int zeroLocation){
 	theBoard = startBoard;
 	//tracks zero location
 	if(startBoard.size() > 1){
@@ -65,7 +67,8 @@ void board::printBoard(){
 
 vector<board> board::getNeighbors(){
 	cout << "test" << endl;
-	vector<int> theNeighbors = current;
+	vector<int> theNeighbors = theBoard;
+	//vector<board> neighbors;
 	int moveZero = zeroLocation;
 	//--center--
 	if (zeroLocation < 6){ //moves it down
@@ -74,9 +77,9 @@ vector<board> board::getNeighbors(){
 		theNeighbors[zeroLocation + 3] = 0;
 		board neighbor(theNeighbors);
 		neighbors.push_back(neighbor);
-		theNeighbors = current;
-		cout << theNeighbors[0] << " " << theNeighbors[1] << " " 
-		<< theNeighbors[2] << endl;
+		theNeighbors = theBoard;
+		// cout << theNeighbors[0] << " " << theNeighbors[1] << " " 
+		// << theNeighbors[2] << endl;
 	}
 	if (zeroLocation > 2){ //moves it up
 		moveZero = theNeighbors[zeroLocation - 3];
@@ -84,7 +87,7 @@ vector<board> board::getNeighbors(){
 		theNeighbors[zeroLocation - 3] = 0;
 		board neighbor(theNeighbors);
 		neighbors.push_back(neighbor);
-		theNeighbors = current;
+		theNeighbors = theBoard;
 	}
 	if ((zeroLocation + 1) % 3 != 0){ //moves right
 		moveZero = theNeighbors[zeroLocation + 1];
@@ -92,7 +95,7 @@ vector<board> board::getNeighbors(){
 		theNeighbors[zeroLocation + 1] = 0;
 		board neighbor(theNeighbors);
 		neighbors.push_back(neighbor);
-		theNeighbors = current;
+		theNeighbors = theBoard;
 	}
 	if ((zeroLocation + 1) % 3 == 0){ //moves right
 		moveZero = theNeighbors[zeroLocation - 1];
@@ -100,17 +103,17 @@ vector<board> board::getNeighbors(){
 		theNeighbors[zeroLocation - 1] = 0;
 		board neighbor(theNeighbors);
 		neighbors.push_back(neighbor);
-		theNeighbors = current;
+		theNeighbors = theBoard;
 	}
 	return neighbors;
 }
 
 void board::printNeighbors(){
-	// cout << theNeighbors[0] << " " << theNeighbors[1] << " " 
-	// 	<< theNeighbors[2] << " " << theNeighbors[3] << " "
-	// 	<< theNeighbors[4] << " " << theNeighbors[5] << " "
-	// 	<< theNeighbors[6] << " " << theNeighbors[7] << " "
-	// 	<< theNeighbors[8] << endl;
+	// cout << neighbors[0] << " " << neighbors[1] << " " 
+	// 	<< neighbors[2] << " " << neighbors[3] << " "
+	// 	<< neighbors[4] << " " << neighbors[5] << " "
+	// 	<< neighbors[6] << " " << neighbors[7] << " "
+	// 	<< neighbors[8] << endl;
 
 	// board neighbor(theBoard);
 	// neighbor.getNeighbors();
@@ -149,24 +152,35 @@ bool board::operator== (board &compareMe){
 	}
 }
 
+bool board::notSeen(board one, board two){
+	vector<int> board1 = one.theBoard;
+	vector<int> board2 = two.theBoard;
+	for (int i = 0; i < theBoard.size(); i++){
+		if (board1[i] != board2[i]){
+			return false; //not seen
+		}
+	}
+	return true;
+}
+
 void board::BFS(board parentBoard)
 {
-	board aBoard(parentBoard);
+	//board aBoard(parentBoard);
 	int moves = 0;
-	heap<board> boardSolve;
-    parentBoard.getNeighbors();
+	parentBoard.getNeighbors();
+	heap<board> heapSearch;
     for (int i = 0; i < neighbors.size(); ++i){
-    	boardSolve.insert(neighbors[i]);
+    	heapSearch.insert(neighbors[i]);
     }
     while(currentScore != 0){
-    	if(moves < 1000){
-    		board best = boardSolve.deleteMin(); //(boardSolve.deleteMin().currentState);
-    		// best = boardSolve.deleteMin();
+    	if(moves > 100){
+    		board best = heapSearch.deleteMin(); //(heapSearch.deleteMin().currentState);
+    		// best = heapSearch.deleteMin();
     		best.getNeighbors();
     		previousBoards.push_back(best);
     		for (int i = 0; i < neighbors.size(); ++i){
     			if(notSeen(neighbors[i]) == true){
-    				boardSolve.insert(neighbors[i]);
+    				heapSearch.insert(neighbors[i]);
     			}
     		}
     		moves = moves + 1;
