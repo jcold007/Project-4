@@ -18,6 +18,7 @@ private:
 	int zeroLocation;							//variable for the zero location
 	vector<int> theBoard;						//vector storage to represent board
 public:
+	board();
 	void BFS(board gameBoard);					//Best-first-search chooses the best move
 	void printBoard();							//print function
 	void swapLocation(int &first, int &second);	//swap function

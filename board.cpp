@@ -75,23 +75,29 @@ vector<board> board::getNeighbors(){
 	//vector<board> neighbors;
 	int moveZero = zeroLocation;
 	//--center--
-	if (zeroLocation < 6){ //moves it down
+	if (zeroLocation < 6){ //moves down
 		moveZero = theNeighbors[zeroLocation + 3];
 		theNeighbors[zeroLocation] = moveZero;
 		theNeighbors[zeroLocation + 3] = 0;
 		board neighbor(theNeighbors);
 		neighbors.push_back(neighbor);
 		theNeighbors = theBoard;
-		// cout << theNeighbors[0] << " " << theNeighbors[1] << " " 
-		// << theNeighbors[2] << endl;
+		cout << theNeighbors[0] << " " << theNeighbors[1] << " " << 
+		theNeighbors[2] << " " << theNeighbors[3] << " " << theNeighbors[4] <<
+		" " << theNeighbors[5] << " " << theNeighbors[6] << " " << 
+		theNeighbors[7] << " " << theNeighbors[8] << endl;
 	}
-	if (zeroLocation > 2){ //moves it up
+	if (zeroLocation > 2){ //moves up
 		moveZero = theNeighbors[zeroLocation - 3];
 		theNeighbors[zeroLocation] = moveZero;
 		theNeighbors[zeroLocation - 3] = 0;
 		board neighbor(theNeighbors);
 		neighbors.push_back(neighbor);
 		theNeighbors = theBoard;
+		cout << theNeighbors[0] << " " << theNeighbors[1] << " " << 
+		theNeighbors[2] << " " << theNeighbors[3] << " " << theNeighbors[4] <<
+		" " << theNeighbors[5] << " " << theNeighbors[6] << " " << 
+		theNeighbors[7] << " " << theNeighbors[8] << endl;
 	}
 	if ((zeroLocation + 1) % 3 != 0){ //moves right
 		moveZero = theNeighbors[zeroLocation + 1];
@@ -100,6 +106,10 @@ vector<board> board::getNeighbors(){
 		board neighbor(theNeighbors);
 		neighbors.push_back(neighbor);
 		theNeighbors = theBoard;
+		cout << theNeighbors[0] << " " << theNeighbors[1] << " " << 
+		theNeighbors[2] << " " << theNeighbors[3] << " " << theNeighbors[4] <<
+		" " << theNeighbors[5] << " " << theNeighbors[6] << " " << 
+		theNeighbors[7] << " " << theNeighbors[8] << endl;
 	}
 	if ((zeroLocation + 1) % 3 == 0){ //moves right
 		moveZero = theNeighbors[zeroLocation - 1];
@@ -108,6 +118,10 @@ vector<board> board::getNeighbors(){
 		board neighbor(theNeighbors);
 		neighbors.push_back(neighbor);
 		theNeighbors = theBoard;
+		cout << theNeighbors[0] << " " << theNeighbors[1] << " " << 
+		theNeighbors[2] << " " << theNeighbors[3] << " " << theNeighbors[4] <<
+		" " << theNeighbors[5] << " " << theNeighbors[6] << " " << 
+		theNeighbors[7] << " " << theNeighbors[8] << endl;
 	}
 	return neighbors;
 }
@@ -173,44 +187,44 @@ Function that serves to check if the board has already been seen. In other words
 this helps scan to not move backwards. If the board has been seen in the vector,
 it would get skip to the next board. 
 */
-bool board::notSeen(board one, board two){
-	vector<int> board1 = one.theBoard;
-	vector<int> board2 = two.theBoard;
-	for (int i = 0; i < theBoard.size(); i++){
-		if (board1[i] != board2[i]){
-			return false; //not seen
-		}
-	}
-	return true;
-}
+// bool board::notSeen(board one, board two){
+// 	vector<board> board1 = one.theBoard;
+// 	vector<board> board2 = two.theBoard;
+// 	for (int i = 0; i < theBoard.size(); i++){
+// 		if (board1[i] != board2[i]){
+// 			return false; //not seen
+// 		}
+// 	}
+// 	return true;
+// }
 
 /*
 Best first search. This function is (supposed) to find the best move to take.
 This function utilizes the heap class in order to organize the boards in the
 tree and to easily choose the next best move
 */
-void board::BFS(board parentBoard)
-{
-	//board aBoard(parentBoard);
-	int moves = 0;
-	parentBoard.getNeighbors();
-	heap<board> heapSearch;
-    for (int i = 0; i < neighbors.size(); ++i){
-    	heapSearch.insert(neighbors[i]);
-    }
-    while(currentScore != 0){
-    	if(moves > 100){
-    		board best = heapSearch.deleteMin(); //(heapSearch.deleteMin().currentState);
-    		// best = heapSearch.deleteMin();
-    		best.getNeighbors();
-    		previousBoards.push_back(best);
-    		for (int i = 0; i < neighbors.size(); ++i){
-    			if(notSeen(neighbors[i]) == false){
-    				heapSearch.insert(neighbors[i]);
-    			}
-    		}
-    		moves = moves + 1;
-    	}
-    }
-}
+// void board::BFS(board parentBoard)
+// {
+// 	//board aBoard(parentBoard);
+// 	int moves = 0;
+// 	parentBoard.getNeighbors();
+// 	heap<board> heapSearch;
+//     for (int i = 0; i < neighbors.size(); ++i){
+//     	heapSearch.insert(neighbors[i]);
+//     }
+//     while(currentScore != 0){
+//     	if(moves > 100){
+//     		board best = heapSearch.deleteMin(); //(heapSearch.deleteMin().currentState);
+//     		// best = heapSearch.deleteMin();
+//     		best.getNeighbors();
+//     		previousBoards.push_back(best);
+//     		for (int i = 0; i < neighbors.size(); ++i){
+//     			if(notSeen(neighbors[i]) == false){
+//     				heapSearch.insert(neighbors[i]);
+//     			}
+//     		}
+//     		moves = moves + 1;
+//     	}
+//     }
+// }
 
