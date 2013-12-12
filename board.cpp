@@ -70,8 +70,8 @@ void board::printBoard(){
 Function serves to fetch the other board possibilities given an initial board.
 */
 vector<board> board::getNeighbors(){
-	cout << "test" << endl;
-	vector<int> theNeighbors = theBoard;
+	cout << "get the neighbors test string" << endl;
+	vector<int> theNeighbors = theBoard; //initiallize the neighbor board
 	//vector<board> neighbors;
 	int moveZero = zeroLocation;
 	//--center--
@@ -87,6 +87,7 @@ vector<board> board::getNeighbors(){
 		" " << theNeighbors[5] << " " << theNeighbors[6] << " " << 
 		theNeighbors[7] << " " << theNeighbors[8] << endl;
 	}
+	theNeighbors = theBoard; //refresh the board
 	if (zeroLocation > 2){ //moves up
 		moveZero = theNeighbors[zeroLocation - 3];
 		theNeighbors[zeroLocation] = moveZero;
@@ -99,6 +100,7 @@ vector<board> board::getNeighbors(){
 		" " << theNeighbors[5] << " " << theNeighbors[6] << " " << 
 		theNeighbors[7] << " " << theNeighbors[8] << endl;
 	}
+	theNeighbors = theBoard; //refresh the board
 	if ((zeroLocation + 1) % 3 != 0){ //moves right
 		moveZero = theNeighbors[zeroLocation + 1];
 		theNeighbors[zeroLocation] = moveZero;
@@ -111,6 +113,7 @@ vector<board> board::getNeighbors(){
 		" " << theNeighbors[5] << " " << theNeighbors[6] << " " << 
 		theNeighbors[7] << " " << theNeighbors[8] << endl;
 	}
+	theNeighbors = theBoard; //refresh the board
 	if ((zeroLocation + 1) % 3 == 0){ //moves right
 		moveZero = theNeighbors[zeroLocation - 1];
 		theNeighbors[zeroLocation] = moveZero;

@@ -36,8 +36,8 @@ int main(){
 	
 	cout << "test1" << endl;
 	gameBoard.getNeighbors();
-	cout << "test2" << endl;
-	gameBoard.printBoard();
+	//cout << "test2" << endl;
+	//gameBoard.printBoard();
 
 	// for(vector<int>::iterator scanner = initBoard.begin()+1;
 	// 			scanner != initBoard.end(); scanner++){
